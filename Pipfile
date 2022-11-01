@@ -9,6 +9,9 @@ dash = "*"
 dash-bootstrap-components = "*"
 numpy = "*"
 plotly = "*"
+python-dotenv = "*"
+sqlalchemy = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
