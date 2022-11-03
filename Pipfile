@@ -12,6 +12,7 @@ plotly = "*"
 python-dotenv = "*"
 sqlalchemy = "*"
 psycopg2 = "*"
+alembic = "*"
 
 [dev-packages]
 

@@ -1,9 +1,9 @@
 from sqlalchemy import String, Integer, Column, Float, Date
-from base import BaseClass
+from src.models.base import BaseClass
 
 
 class Tracks(BaseClass):
-    
+
     _id = Column(Integer, primary_key=True, index=True)
     
     round = Column(Integer, nullable=False, unique=True)

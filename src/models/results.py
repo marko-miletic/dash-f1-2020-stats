@@ -1,9 +1,9 @@
 from sqlalchemy import String, Integer, Column, ForeignKey
-from base import BaseClass
+from src.models.base import BaseClass
 
 
 class RaceResults(BaseClass):
-    
+
     _id = Column(Integer, primary_key=True, index=True)
 
     position = Column(Integer, nullable=False, unique=False)

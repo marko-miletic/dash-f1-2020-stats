@@ -1,9 +1,9 @@
 from sqlalchemy import String, Integer, Column, ForeignKey, Date
-from base import BaseClass
+from src.models.base import BaseClass
 
 
 class Drivers(BaseClass):
-    
+
     _id = Column(Integer, primary_key=True, index=True)
 
     abbreviation = Column(String(50), nullable=False, unique=True)
