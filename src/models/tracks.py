@@ -3,7 +3,9 @@ from base import BaseClass
 
 
 class Tracks(BaseClass):
+    
     _id = Column(Integer, primary_key=True, index=True)
+    
     round = Column(Integer, nullable=False, unique=True)
     country = Column(String(50), nullable=False, unique=False)
     city = Column(String(50), nullable=False, unique=False)

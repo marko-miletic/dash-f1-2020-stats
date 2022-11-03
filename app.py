@@ -1,6 +1,7 @@
 import dash
 from dash import Dash, html
 import dash_bootstrap_components as dbc
+from src.core.config import get_db_connection_url
 
 
 app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -21,4 +22,5 @@ app.layout = html.Div([
 ])
 
 if __name__ == '__main__':
-	app.run_server(debug=True)
+	#app.run_server(debug=True)
+    print(get_db_connection_url())
