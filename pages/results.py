@@ -7,7 +7,7 @@ import dash_bootstrap_components as dbc
 from src import graph_data
 
 
-results_dataframe = pd.read_csv('./data/formula1_2020season_raceResults.csv')
+results_dataframe = pd.read_csv('./src/data/formula1_2020season_raceResults.csv')
 
 
 dash.register_page(__name__)

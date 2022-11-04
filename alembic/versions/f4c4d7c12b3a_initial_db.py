@@ -1,8 +1,8 @@
 """Initial db
 
-Revision ID: f5e53c08add2
+Revision ID: f4c4d7c12b3a
 Revises: 
-Create Date: 2022-11-03 15:05:24.881744
+Create Date: 2022-11-04 15:13:00.440964
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f5e53c08add2'
+revision = 'f4c4d7c12b3a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,7 +31,7 @@ def upgrade() -> None:
     sa.Column('city', sa.String(length=50), nullable=False),
     sa.Column('circuit_name', sa.String(length=50), nullable=False),
     sa.Column('gp_name', sa.String(length=50), nullable=False),
-    sa.Column('race_date', sa.Date(), nullable=False),
+    sa.Column('race_date', sa.String(length=50), nullable=False),
     sa.Column('first_gp', sa.Integer(), nullable=False),
     sa.Column('number_of_laps', sa.Integer(), nullable=False),
     sa.Column('circuit_length_km', sa.Float(), nullable=False),
@@ -42,14 +42,14 @@ def upgrade() -> None:
     sa.Column('turns', sa.Integer(), nullable=False),
     sa.Column('drs_zones', sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint('_id'),
-    sa.UniqueConstraint('circuit_name'),
     sa.UniqueConstraint('round')
     )
     op.create_index(op.f('ix_tracks__id'), 'tracks', ['_id'], unique=False)
     op.create_table('drivers',
     sa.Column('_id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=50), nullable=False),
     sa.Column('abbreviation', sa.String(length=50), nullable=False),
-    sa.Column('number', sa.Integer(), nullable=False),
+    sa.Column('number', sa.String(length=50), nullable=False),
     sa.Column('country', sa.String(length=50), nullable=False),
     sa.Column('podiums', sa.String(length=50), nullable=False),
     sa.Column('points', sa.Integer(), nullable=False),
@@ -57,24 +57,25 @@ def upgrade() -> None:
     sa.Column('world_championships', sa.String(length=50), nullable=True),
     sa.Column('highest_race_finish', sa.String(length=50), nullable=True),
     sa.Column('highest_grid_position', sa.String(length=50), nullable=True),
-    sa.Column('date_of_birth', sa.Date(), nullable=True),
+    sa.Column('date_of_birth', sa.String(length=50), nullable=True),
     sa.Column('place_of_birth', sa.String(length=50), nullable=True),
     sa.Column('_team_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['_team_id'], ['teams._id'], ),
     sa.PrimaryKeyConstraint('_id'),
     sa.UniqueConstraint('abbreviation'),
+    sa.UniqueConstraint('name'),
     sa.UniqueConstraint('number')
     )
     op.create_index(op.f('ix_drivers__id'), 'drivers', ['_id'], unique=False)
     op.create_table('raceresults',
     sa.Column('_id', sa.Integer(), nullable=False),
-    sa.Column('position', sa.Integer(), nullable=False),
+    sa.Column('position', sa.String(), nullable=False),
     sa.Column('no', sa.Integer(), nullable=False),
     sa.Column('starting_grid', sa.Integer(), nullable=False),
     sa.Column('laps', sa.Integer(), nullable=False),
     sa.Column('total_time_gap_retirement', sa.String(length=50), nullable=False),
     sa.Column('points', sa.Integer(), nullable=False),
-    sa.Column('fastest_lap', sa.String(length=50), nullable=False),
+    sa.Column('fastest_lap', sa.Boolean(), nullable=False),
     sa.Column('_track_id', sa.Integer(), nullable=True),
     sa.Column('_driver_id', sa.Integer(), nullable=True),
     sa.Column('_team_id', sa.Integer(), nullable=True),
