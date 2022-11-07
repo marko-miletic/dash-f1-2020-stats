@@ -81,22 +81,28 @@ def fill_database() -> None:
         ))
         tracks_key_relation[row['GP Name']] = index
 
-    results_dataframe = pd.read_csv(os.path.join(DATA_FILES_PATH, 'formula1_2020season_raceResults.csv'))
-
     session.commit()
 
+
+    results_dataframe = pd.read_csv(os.path.join(DATA_FILES_PATH, 'formula1_2020season_raceResults.csv'))
 
     fastest_lap_switch = {
         'Yes': True,
         'No': False
     }
 
-    results_dataframe = results_dataframe.replace('Racing Point BWT Mercedes', 'Racing Point')
-    results_dataframe = results_dataframe.replace('AlphaTauri Honda', 'AlphaTauri')
-    results_dataframe = results_dataframe.replace('Alfa Romeo Racing Ferrari', 'Alfa Romeo')
-    results_dataframe = results_dataframe.replace('Williams Mercedes', 'Williams')
-    results_dataframe = results_dataframe.replace('Red Bull Racing Honda', 'Red Bull Racing')
-    results_dataframe = results_dataframe.replace('Haas Ferrari', 'Haas')
+    team_name_replacement = {
+        'Racing Point BWT Mercedes': 'Racing Point',
+        'AlphaTauri Honda': 'AlphaTauri',
+        'Alfa Romeo Racing Ferrari': 'Alfa Romeo',
+        'Williams Mercedes': 'Williams',
+        'Red Bull Racing Honda': 'Red Bull Racing',
+        'Haas Ferrari': 'Haas'
+    }
+
+    results_dataframe['Team'] = results_dataframe['Team'].replace(
+        team_name_replacement.keys(), team_name_replacement.values()
+    )
 
     for index, row in results_dataframe.iterrows():
         session.add(RaceResults(
