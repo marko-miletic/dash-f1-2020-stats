@@ -4,7 +4,7 @@ import pandas as pd
 import dash_bootstrap_components as dbc
 
 
-calendar_dataframe = pd.read_csv('./data/formula1_2020season_calendar.csv')
+calendar_dataframe = pd.read_csv('./src/data/formula1_2020season_calendar.csv')
 
 
 dash.register_page(__name__)

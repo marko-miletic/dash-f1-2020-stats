@@ -1,11 +1,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from base import BaseClass
-from teams import Teams
-from drivers import Drivers
-from tracks import Tracks
-from results import RaceResults
+from src.models.base import BaseClass
+from src.models.teams import Teams
+from src.models.drivers import Drivers
+from src.models.tracks import Tracks
+from src.models.results import RaceResults
 
 
 # dialect+driver://username:password@host:port/database

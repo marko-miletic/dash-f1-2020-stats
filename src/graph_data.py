@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 
-DATA_FILES_DIRECTORY = "./data/"
+DATA_FILES_DIRECTORY = "./src/data/"
 
 
 def get_graph_data():

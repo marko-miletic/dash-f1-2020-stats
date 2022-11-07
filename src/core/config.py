@@ -1,5 +1,6 @@
 from dotenv import dotenv_values
 
+
 def get_db_connection_url() -> str:
     config = dotenv_values(".env")
     db_connection_url = (
