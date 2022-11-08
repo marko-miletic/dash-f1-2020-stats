@@ -3,9 +3,10 @@ from dash import html
 import pandas as pd
 import dash_bootstrap_components as dbc
 
+from src.database.session import engine
+from src.database.db_queries import get_calendar_query
 
-calendar_dataframe = pd.read_csv('./src/data/formula1_2020season_calendar.csv')
-
+calendar_dataframe = pd.read_sql_query(get_calendar_query(), engine)
 
 dash.register_page(__name__)
 

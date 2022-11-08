@@ -3,9 +3,10 @@ from dash import html, callback, Input, Output
 import pandas as pd
 import dash_bootstrap_components as dbc
 
+from src.database.session import engine
+from src.database.db_queries import get_drivers_query
 
-drivers_dataframe = pd.read_csv('./src/data/formula1_2020season_drivers.csv')
-
+drivers_dataframe = pd.read_sql_query(get_drivers_query(), engine)
 
 dash.register_page(__name__)
 
@@ -105,11 +106,10 @@ layout = html.Div([
     Input(component_id='order_input', component_property='value')
 )
 def filters(input_wdc, input_constructors, input_order):
-    # world drivers championship dataframe filtering
     wdc_options = {
         'All': drivers_dataframe,
-        'True': drivers_dataframe[drivers_dataframe['World Championships'] > 0],
-        'False': drivers_dataframe[drivers_dataframe['World Championships'] == 0]
+        'True': drivers_dataframe[drivers_dataframe['World Championships'] != '0'],
+        'False': drivers_dataframe[drivers_dataframe['World Championships'] == '0']
     }
     wdc_filtered_df = wdc_options[input_wdc]
 
@@ -118,7 +118,7 @@ def filters(input_wdc, input_constructors, input_order):
     constructor_filtered_df = wdc_filtered_df[wdc_filtered_df['Team'].isin(constructor_options)]
 
     # changing sorting order by input
-    ascending = input_order not in {'Grands Prix Entered', 'World Championships'}
+    ascending = input_order not in {'Grand Prix Entered', 'World Championships'}
     order_filtered_df = constructor_filtered_df.sort_values(by=[input_order, 'Driver'], ascending=ascending)
 
     return generate_table(order_filtered_df)

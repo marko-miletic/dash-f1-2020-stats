@@ -6,9 +6,10 @@ import dash_bootstrap_components as dbc
 
 from src import graph_data
 
+from src.database.session import engine
+from src.database.db_queries import get_race_results_query
 
-results_dataframe = pd.read_csv('./src/data/formula1_2020season_raceResults.csv')
-
+results_dataframe = pd.read_sql_query(get_race_results_query(), engine)
 
 dash.register_page(__name__)
 
@@ -21,8 +22,8 @@ def generate_table(dataframe):
 graph_data = graph_data.get_graph_data()
 constructors_figure = px.bar(graph_data[0], x="Team", y="Points")
 drivers_figure = px.bar(graph_data[1], x="Driver", y="Points")
-winners_figure = px.funnel(graph_data[2], x='Win Count', y='Driver')
-podiums_figure = px.funnel(graph_data[3], x='Podium Count', y='Driver')
+winners_figure = px.funnel(graph_data[2], x='Win_Count', y='Driver')
+podiums_figure = px.funnel(graph_data[3], x='Podium_Count', y='Driver')
 
 
 layout = html.Div([
