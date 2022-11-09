@@ -1,4 +1,4 @@
-from session import SessionLocal, engine
+from src.database.session import SessionLocal, engine
 from src.models.base import BaseClass
 
 
