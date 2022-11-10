@@ -4,7 +4,9 @@ from src.models.teams import Teams
 from src.models.tracks import Tracks
 from src.models.results import RaceResults
 
+
 session = SessionLocal()
+
 
 def get_drivers_query():
     drivers_query = session.query(
@@ -23,6 +25,7 @@ def get_drivers_query():
         Drivers.place_of_birth.label('Place of Birth')
     ).join(Teams)
     return drivers_query.statement
+
 
 def get_calendar_query():
     calendar_query = session.query(
@@ -43,6 +46,7 @@ def get_calendar_query():
         Tracks.drs_zones.label('DRS Zones')
     )
     return calendar_query.statement
+
 
 def get_race_results_query():
     race_results_query = session.query(
