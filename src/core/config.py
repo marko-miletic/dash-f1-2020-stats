@@ -1,10 +1,16 @@
 from dotenv import dotenv_values
+from pydantic import PostgresDsn
 
 
-def get_db_connection_url() -> str:
+def assemble_db_connection() -> str:
+
     config = dotenv_values(".env")
-    db_connection_url = (
-        f"postgresql+psycopg2://{config['POSTGRES_DB']}:{config['POSTGRES_PW']}@"
-        f"{config['POSTGRES_HOST']}:{config['POSTGRES_PORT']}/postgres"
+
+    return PostgresDsn.build(
+        scheme="postgresql",
+        user=config["POSTGRES_USER"],
+        password=config["POSTGRES_PASSWORD"],
+        host="db",
+        port=config["POSTGRES_PORT"],
+        path=f"/{config['POSTGRES_DB'] or ''}"
     )
-    return db_connection_url

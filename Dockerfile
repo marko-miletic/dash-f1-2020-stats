@@ -1,11 +1,13 @@
 FROM python:3.9
 
-COPY . /app
-WORKDIR /app
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
 
-RUN python -m pip install --upgrade pip
-RUN pip install pipenv && pipenv install --dev --system --deploy
-RUN sh pre_start.sh
+COPY . .
+RUN  pip install pipenv  \
+&& pipenv requirements > requirements.txt \
+&& pip install -r requirements.txt
 
 EXPOSE 8050
-CMD ["python", "app.py"]
+
+CMD bash pre_start.sh && python app.py
