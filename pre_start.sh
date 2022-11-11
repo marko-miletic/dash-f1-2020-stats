@@ -1,13 +1,9 @@
 #! /usr/bin/env bash
 
-#Start docker container
-docker compose --force-recreate -d --wait
-sleep 1
-
-# Run migrations
+# Run Alembic scrip
+sleep 5
 alembic upgrade head
 
+# Fill with test data
+sleep 5
 python3 pre_start.py
-
-# Run API
-#python3 app.py
