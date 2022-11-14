@@ -2,6 +2,8 @@ import dash
 from dash import Dash, html
 import dash_bootstrap_components as dbc
 
+from src.core.config import app_server_settings
+
 
 def build_app():
     app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -25,4 +27,8 @@ def build_app():
 
 
 if __name__ == '__main__':
-    build_app().run_server(debug=False, host='0.0.0.0', port=8050)
+    build_app().run_server(
+        debug=app_server_settings.DEBUG,
+        host=app_server_settings.HOST,
+        port=app_server_settings.PORT
+    )

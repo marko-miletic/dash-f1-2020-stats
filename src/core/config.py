@@ -1,16 +1,44 @@
-from dotenv import dotenv_values
-from pydantic import PostgresDsn
+from typing import Optional, Any
+from pydantic import BaseSettings, BaseModel, \
+    PostgresDsn, validator
+
+from os import getenv
+from dotenv import load_dotenv
+load_dotenv()
 
 
-def assemble_db_connection() -> str:
+class Settings(BaseSettings):
+    PROJECT_NAME: str = "dash-stats-app"
 
-    config = dotenv_values(".env")
+    POSTGRES_PASSWORD: str
+    POSTGRES_HOST: str
+    POSTGRES_PORT: str
+    SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn]
 
-    return PostgresDsn.build(
-        scheme="postgresql",
-        user=config["POSTGRES_USER"],
-        password=config["POSTGRES_PASSWORD"],
-        host="db",
-        port=config["POSTGRES_PORT"],
-        path=f"/{config['POSTGRES_DB'] or ''}"
-    )
+    @validator("SQLALCHEMY_DATABASE_URI", pre=True)
+    def assemble_db_connection(cls, v: Optional[str]) -> Any:
+        if isinstance(v, str):
+            return v
+        
+        return PostgresDsn.build(
+            scheme="postgresql",
+            user=getenv("POSTGRES_USER"),
+            password=getenv("POSTGRES_PASSWORD"),
+            host="db",
+            port=getenv("POSTGRES_PORT"),
+            path=f"/{getenv('POSTGRES_DB') or ''}"
+        )
+
+    class Config:
+        case_sensitive = True
+        env_file = ".env"
+
+
+class AppServerSettings(BaseModel):
+    DEBUG: bool = True
+    HOST: str = '0.0.0.0'
+    PORT: int = 8050
+
+
+settings = Settings()
+app_server_settings = AppServerSettings()

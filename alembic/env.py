@@ -5,7 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from src.core.config import assemble_db_connection
+from src.core.config import settings
 
 import os
 from dotenv import load_dotenv
@@ -44,7 +44,7 @@ def run_migrations_offline() -> None:
     """
 
     context.configure(
-        url=assemble_db_connection(),
+        url=settings.SQLALCHEMY_DATABASE_URI,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
@@ -61,7 +61,7 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
     """
     configuration = config.get_section(config.config_ini_section)
-    configuration["sqlalchemy.url"] = assemble_db_connection()
+    configuration["sqlalchemy.url"] = settings.SQLALCHEMY_DATABASE_URI
 
     connectable = engine_from_config(
         configuration, prefix="sqlalchemy.", poolclass=pool.NullPool,
