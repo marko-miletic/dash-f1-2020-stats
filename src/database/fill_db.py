@@ -13,6 +13,10 @@ from src.src_path_structure import DATA_FILES_PATH
 def fill_database() -> None:
 
     session = SessionLocal()
+        
+    test_result = session.query(Teams._id).first()
+    if test_result is not None:
+        return
 
     teams_key_relation = dict()
     drivers_key_relation = dict()
