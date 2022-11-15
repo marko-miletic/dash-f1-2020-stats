@@ -3,6 +3,7 @@ from pydantic import BaseSettings, BaseModel, \
     PostgresDsn, validator
 
 from os import getenv
+from os import environ
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -24,7 +25,7 @@ class Settings(BaseSettings):
             scheme="postgresql",
             user=getenv("POSTGRES_USER"),
             password=getenv("POSTGRES_PASSWORD"),
-            host="db",
+            host=getenv('POSTGRES_HOST'),
             port=getenv("POSTGRES_PORT"),
             path=f"/{getenv('POSTGRES_DB') or ''}"
         )
@@ -37,7 +38,7 @@ class Settings(BaseSettings):
 class AppServerSettings(BaseModel):
     DEBUG: bool = True
     HOST: str = '0.0.0.0'
-    PORT: int = 8050
+    PORT: int = (environ.get('PORT') or 8050)
 
 
 settings = Settings()
